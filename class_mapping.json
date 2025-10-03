@@ -1,0 +1,14 @@
+{
+  "Bacterial spot": 0,
+  "Early blight": 1,
+  "Late blight": 2,
+  "Leaf Mold": 3,
+  "Septoria leaf spot": 4,
+  "Spider mites Two spotted spider mite": 5,
+  "Target Spot": 6,
+  "Tomato YellowLeaf Curl Virus": 7,
+  "Tomato mosaic virus": 8,
+  "bell Bacterial spot": 9,
+  "bell healthy": 10,
+  "healthy": 11
+}

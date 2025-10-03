@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fasal Mitra - Smart Farming PWA</title>
+  <link rel="manifest" href="manifest.json" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0; padding: 0;
+      background: #f5f7fa;
+      color: #222;
+    }
+    header {
+      background: #2e7d32;
+      color: white;
+      padding: 15px;
+      text-align: center;
+    }
+    main {
+      padding: 20px;
+    }
+    section {
+      margin-bottom: 30px;
+      background: white;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    h2 { color: #2e7d32; }
+    button {
+      background: #2e7d32;
+      color: white;
+      border: none;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    button:hover { background: #1b5e20; }
+    select, input, textarea {
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      width: 100%;
+    }
+    #output {
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🌱 Fasal Mitra</h1>
+    <p>Plant Disease Detection & Smart Farming Assistant</p>
+  </header>
+
+  <main>
+    <!-- Language Selection -->
+    <section>
+      <h2>🌐 Choose Language</h2>
+      <select id="language">
+        <option value="en-IN">English</option>
+        <option value="hi-IN">हिन्दी (Hindi)</option>
+        <option value="te-IN">తెలుగు (Telugu)</option>
+        <option value="ta-IN">தமிழ் (Tamil)</option>
+        <option value="kn-IN">ಕನ್ನಡ (Kannada)</option>
+        <option value="mr-IN">मराठी (Marathi)</option>
+      </select>
+    </section>
+
+    <!-- Image Upload -->
+    <section>
+      <h2>📸 Upload Crop Image</h2>
+      <input type="file" id="fileInput" accept="image/*">
+      <button onclick="predictDisease()">Upload & Detect</button>
+      <div id="output"></div>
+    </section>
+
+    <!-- Voice Input -->
+    <section>
+      <h2>🎙️ Voice Input (Ask a Question)</h2>
+      <button onclick="startListening()">Start Listening</button>
+      <p id="voiceText">Say something...</p>
+    </section>
+
+    <!-- Dashboard -->
+    <section>
+      <h2>📊 Statistics Dashboard</h2>
+      <canvas id="statsChart" width="300" height="150"></canvas>
+    </section>
+
+    <!-- Community Forum -->
+    <section>
+      <h2>👥 Community Forum</h2>
+      <textarea placeholder="Share your thoughts..."></textarea>
+      <button>Post</button>
+      <div id="forumPosts"></div>
+    </section>
+
+    <!-- Chatbot -->
+    <section>
+      <h2>🤖 Chatbot</h2>
+      <input type="text" id="chatInput" placeholder="Ask me anything..." />
+      <button onclick="sendMessage()">Send</button>
+      <div id="chatBox"></div>
+    </section>
+
+    <!-- Teleconsulting -->
+    <section>
+      <h2>📞 Teleconsulting with Experts</h2>
+      <button onclick="alert('Connecting to expert...')">Request Call</button>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    // Fake Prediction
+    async function predictDisease() {
+      const file = document.getElementById("fileInput").files[0];
+      if (!file) { alert("Please select an image"); return; }
+      document.getElementById("output").innerHTML = "Analyzing...";
+      // Simulated result
+      setTimeout(() => {
+        const disease = "Tomato Leaf Mold";
+        const solution = "Use fungicides like copper spray. Ensure proper spacing.";
+        document.getElementById("output").innerHTML = `
+          <h3>Disease: ${disease}</h3>
+          <p>Solution: ${solution}</p>
+        `;
+        speak(disease + ". " + solution);
+      }, 2000);
+    }
+
+    // Text-to-Speech
+    function speak(text) {
+      const lang = document.getElementById("language").value;
+      const msg = new SpeechSynthesisUtterance(text);
+      msg.lang = lang;
+      window.speechSynthesis.speak(msg);
+    }
+
+    // Voice Input (Speech Recognition)
+    function startListening() {
+      const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+      recognition.lang = document.getElementById("language").value;
+      recognition.start();
+      recognition.onresult = (event) => {
+        const spokenText = event.results[0][0].transcript;
+        document.getElementById("voiceText").innerText = "You said: " + spokenText;
+        // Example: reply with TTS
+        speak("You asked about " + spokenText);
+      };
+    }
+
+    // Simple Dashboard Example
+    const ctx = document.getElementById('statsChart');
+    new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: ['Tomato', 'Potato', 'Rice'],
+        datasets: [{
+          label: 'Detected Cases',
+          data: [12, 19, 7]
+        }]
+      }
+    });
+
+    // Simple Forum
+    document.querySelector("section textarea").addEventListener("keypress", function(e){
+      if(e.key === "Enter") {
+        e.preventDefault();
+        document.querySelector("button").click();
+      }
+    });
+
+    // Simple Chatbot
+    function sendMessage() {
+      const input = document.getElementById("chatInput").value;
+      if (!input) return;
+      const chatBox = document.getElementById("chatBox");
+      chatBox.innerHTML += `<p><b>You:</b> ${input}</p>`;
+      // Fake bot reply
+      setTimeout(() => {
+        const reply = "This is a test reply to: " + input;
+        chatBox.innerHTML += `<p><b>Bot:</b> ${reply}</p>`;
+        speak(reply);
+      }, 1000);
+      document.getElementById("chatInput").value = "";
+    }
+  </script>
+</body>
+</html>

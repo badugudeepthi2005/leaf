@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>EVER GREEN</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: url('https://media.istockphoto.com/id/520621350/photo/sunny-early-on-tea-plantation.jpg?s=612x612&w=0&k=20&c=KPPFGt8KmcUVpnoAXdgZbfXgqR2EebZy7TR9PieBzQU=') center/cover no-repeat fixed;
+      min-height: 100vh;
+    }
+    .bg-overlay {
+      background: rgba(255,255,255,0.83);
+      backdrop-filter: blur(2.5px);
+    }
+    .hidden {
+      display: none;
+    }
+    .nav-btn {
+      transition: background 0.2s;
+    }
+    .nav-btn.active,
+    .nav-btn:hover {
+      background: #059669;
+      color: #fff;
+    }
+  </style>
+</head>
+<body class="text-gray-800">
+  <!-- NAVIGATION -->
+  <header class="bg-green-700 bg-opacity-90 text-white p-4 flex justify-between items-center">
+    <div class="flex items-center">
+      <h1 class="text-xl font-bold mr-8" id="navBrand">EVER GREEN</h1>
+      <nav>
+        <button onclick="showSection('home')" id="navHome" class="nav-btn py-1 px-4 rounded mr-2">Home</button>
+        <button onclick="showSection('organic')" id="navOrganic" class="nav-btn py-1 px-4 rounded mr-2">Organic</button>
+        <button onclick="showSection('detect')" id="navDetect" class="nav-btn py-1 px-4 rounded">Detection</button>
+      </nav>
+    </div>
+    <select id="langSwitch" class="text-black p-1 rounded">
+      <option value="en">English</option>
+      <option value="te">తెలుగు</option>
+    </select>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="py-10">
+    <!-- HOME SECTION -->
+    <section id="section-home" class="bg-overlay max-w-3xl mx-auto p-8 rounded-2xl shadow-lg mb-6">
+      <h2 class="text-3xl font-bold mb-4" id="welcomeHeading"></h2>
+      <p class="text-lg mb-6" id="welcomeDesc"></p>
+      <div>
+        <h3 class="text-2xl font-bold mb-2" id="aboutTitle"></h3>
+        <p class="mb-4" id="aboutMission"></p>
+        <ul id="aboutFeatures" class="list-disc pl-6 space-y-2"></ul>
+      </div>
+    </section>
+
+    <!-- ORGANIC SECTION -->
+    <section id="section-organic" class="bg-overlay max-w-3xl mx-auto p-8 rounded-2xl shadow-lg mb-6 hidden">
+      <h2 class="text-2xl font-bold mb-4" id="organicTitle"></h2>
+
+      <!-- Rice -->
+      <h3 class="text-xl font-semibold mb-2">Rice</h3>
+      <ol class="list-decimal pl-6 mb-6 space-y-2 text-lg">
+        <li>Prepare soil by plowing thoroughly and apply organic compost.</li>
+        <li>Use high-quality, disease-resistant seed varieties for transplanting.</li>
+        <li>Maintain proper water management with controlled flooding during growth.</li>
+        <li>Keep field weed-free and use natural pest control methods like neem sprays.</li>
+        <li>Harvest at the correct maturity stage for best yield and quality.</li>
+      </ol>
+
+      <!-- Wheat -->
+      <h3 class="text-xl font-semibold mb-2">Wheat</h3>
+      <ol class="list-decimal pl-6 mb-6 space-y-2 text-lg">
+        <li>Rotate crops yearly to maintain soil nutrients and reduce pests.</li>
+        <li>Apply well-prepared farmyard manure before sowing.</li>
+        <li>Use certified disease-resistant seeds to avoid common fungal infections.</li>
+        <li>Implement drip or sprinkler irrigation to optimize water use.</li>
+        <li>Monitor regularly for early signs of rust or blight and treat organically.</li>
+      </ol>
+
+      <!-- Tomato -->
+      <h3 class="text-xl font-semibold mb-2">Tomato</h3>
+      <ol class="list-decimal pl-6 mb-6 space-y-2 text-lg">
+        <li>Ensure soil is fertile with balanced nutrients using compost and vermicompost.</li>
+        <li>Mulch the soil to retain moisture and reduce weed growth.</li>
+        <li>Apply bio-pesticides such as Trichoderma to manage fungal diseases.</li>
+        <li>Water plants regularly with drip irrigation avoiding waterlogging.</li>
+        <li>Plant disease-resistant tomato varieties and rotate with legumes.</li>
+      </ol>
+
+      <!-- Cotton -->
+      <h3 class="text-xl font-semibold mb-2">Cotton</h3>
+      <ol class="list-decimal pl-6 mb-6 space-y-2 text-lg">
+        <li>Use organic fertilizers and well-decomposed farm manure before sowing.</li>
+        <li>Practice intercropping with legumes to improve soil nitrogen.</li>
+        <li>Spray neem oil for natural pest control regularly.</li>
+        <li>Maintain proper spacing between plants for airflow and healthy growth.</li>
+        <li>Rotate crops to manage pest buildup and maintain soil health.</li>
+      </ol>
+
+      <!-- Pulses -->
+      <h3 class="text-xl font-semibold mb-2">Pulses</h3>
+      <ol class="list-decimal pl-6 mb-6 space-y-2 text-lg">
+        <li>Use Rhizobium inoculants to boost nitrogen fixation in soils.</li>
+        <li>Apply vermicompost and organic manure to improve soil fertility.</li>
+        <li>Ensure timely sowing as per recommended season to reduce pest attacks.</li>
+        <li>Rotate pulses with cereals to prevent disease buildup.</li>
+        <li>Regularly monitor for pests and apply botanical pesticides when needed.</li>
+      </ol>
+    </section>
+
+    <!-- DETECTION SECTION -->
+    <section id="section-detect" class="bg-overlay max-w-3xl mx-auto p-8 rounded-2xl shadow-lg mb-6 hidden">
+      <h2 class="text-2xl font-bold mb-4" id="detectionTitle"></h2>
+      <label id="uploadLabel" class="font-semibold"></label>
+      <input type="file" id="leafInput" accept="image/*" class="mb-4 block w-full border rounded p-2" />
+      <button onclick="predictDisease()" id="detectBtn" class="bg-green-600 text-white px-4 py-2 rounded mb-3"></button>
+      <div id="result" class="mt-4 text-lg font-medium text-gray-700"></div>
+    </section>
+  </main>
+
+  <footer class="bg-green-700 text-white text-center py-4">
+    <p id="footerText"></p>
+  </footer>
+
+  <script>
+    const LOCALE = {
+      en: {
+        navBrand: "Leaf Disease Detector & Smart Farming",
+        nav: ["Home", "Organic", "Detection"],
+        welcomeHeading: "Welcome to the Leaf Disease Detector and Smart Farming Portal",
+        welcomeDesc: "Empowering farmers, students, and researchers with quick disease detection, smart remedies, and sustainable organic farming advice.",
+        aboutTitle: "Mission",
+        aboutMission: "A smart and user-friendly bilingual (English & తెలుగు) web platform designed to help farmers, students, and researchers.",
+        aboutFeatures: [
+          "Accurate Disease Detection with image uploads",
+          "Remedies & Medicines for each disease",
+          "Results in text & voice (English & Telugu)",
+          "Smart Farming tips with step-by-step crop guidance",
+          "Educational tool for farmers, students, and researchers",
+        ],
+        organicTitle: "🌱 Organic Farming Methods",
+        detectionTitle: "Leaf Disease Detection",
+        uploadLabel: "Upload Leaf Image",
+        detectBtn: "Detect Disease",
+        pleaseUpload: "Please upload a leaf image first.",
+        footer: "© 2025 Leaf Disease Detector and Smart Farming",
+      },
+      te: {
+        navBrand: "ఆకు వ్యాధి గుర్తింపు & స్మార్ట్ వ్యవసాయం",
+        nav: ["ఇంటి పేజీ", "ఆర్గానిక్", "వ్యాధి గుర్తింపు"],
+        welcomeHeading: "ఆకు వ్యాధి గుర్తింపు మరియు స్మార్ట్ వ్యవసాయం టోకు స్వాగతం",
+        welcomeDesc: "రైతులు, విద్యార్థులు, పరిశోధకులకు వేగవంతమైన వ్యాధి గుర్తింపు, చికిత్సలు, స్మార్ట్ ఆర్గానిక్ పద్ధతులు అందించే ఉత్తమ వేదిక.",
+        aboutTitle: "మిషన్",
+        aboutMission: "రైతులు, విద్యార్థులు మరియు పరిశోధకులకు ఉపయోగపడే ద్విభాషా (English & తెలుగు) వెబ్ ప్లాట్‌ఫారమ్.",
+        aboutFeatures: [
+          "చిత్రాలను అప్‌లోడ్ చేసి ఖచ్చితమైన వ్యాధి గుర్తింపు",
+          "ప్రతి వ్యాధికి చికిత్సలు & మందులు",
+          "ఫలితాలు వాయిస్ మరియు టెక్స్ట్ రూపంలో (English & తెలుగు)",
+          "పంటలను దశలవారీగా పండించే సూచనలు",
+          "రైతులు, విద్యార్థులు, పరిశోధకులకు విద్యా వనరు",
+        ],
+        organicTitle: "🌱 ఆర్గానిక్ వ్యవసాయ పద్ధతులు",
+        detectionTitle: "ఆకు వ్యాధి గుర్తింపు",
+        uploadLabel: "ఆకును అప్‌లోడ్ చేయండి",
+        detectBtn: "వ్యాధిని గుర్తించండి",
+        pleaseUpload: "దయచేసి ముందుగా ఆకును అప్‌లోడ్ చేయండి.",
+        footer: "© 2025 ఆకు వ్యాధి గుర్తింపు మరియు స్మార్ట్ వ్యవసాయం",
+      },
+    };
+
+    let currentLang = localStorage.getItem("lang") || "en";
+
+    function applyLocale(lang) {
+      localStorage.setItem("lang", lang);
+      const t = LOCALE[lang];
+      document.getElementById("navBrand").textContent = t.navBrand;
+      document.getElementById("navHome").textContent = t.nav[0];
+      document.getElementById("navOrganic").textContent = t.nav[1];
+      document.getElementById("navDetect").textContent = t.nav[2];
+      document.getElementById("welcomeHeading").textContent = t.welcomeHeading;
+      document.getElementById("welcomeDesc").textContent = t.welcomeDesc;
+      document.getElementById("aboutTitle").textContent = t.aboutTitle;
+      document.getElementById("aboutMission").textContent = t.aboutMission;
+      const aboutUl = document.getElementById("aboutFeatures");
+      aboutUl.innerHTML = "";
+      t.aboutFeatures.forEach((f) => {
+        const li = document.createElement("li");
+        li.textContent = f;
+        aboutUl.appendChild(li);
+      });
+      document.getElementById("organicTitle").textContent = t.organicTitle;
+      document.getElementById("detectionTitle").textContent = t.detectionTitle;
+      document.getElementById("uploadLabel").textContent = t.uploadLabel;
+      document.getElementById("detectBtn").textContent = t.detectBtn;
+      document.getElementById("footerText").textContent = t.footer;
+    }
+
+    document.getElementById("langSwitch").addEventListener("change", (e) => {
+      currentLang = e.target.value;
+      applyLocale(currentLang);
+    });
+
+    function showSection(section) {
+      ["home", "organic", "detect"].forEach((id) => {
+        document.getElementById("section-" + id).classList.add("hidden");
+        document.getElementById("nav" + id.charAt(0).toUpperCase() + id.slice(1)).classList.remove("active");
+      });
+      document.getElementById("section-" + section).classList.remove("hidden");
+      document.getElementById("nav" + section.charAt(0).toUpperCase() + section.slice(1)).classList.add("active");
+    }
+
+    async function predictDisease() {
+      const fileInput = document.getElementById("leafInput");
+      const resultDiv = document.getElementById("result");
+      if (!fileInput.files.length) {
+        resultDiv.textContent = LOCALE[currentLang].pleaseUpload;
+        return;
+      }
+      const formData = new FormData();
+      formData.append("file", fileInput.files[0]);
+      formData.append("lang", currentLang);
+      resultDiv.textContent = currentLang === "en" ? "Detecting..." : "గుర్తిస్తున్నాము...";
+      try {
+        const resp = await fetch("http://localhost:5000/predict", {
+          method: "POST",
+          body: formData,
+        });
+        const data = await resp.json();
+        const message =
+          currentLang === "en"
+            ? `Predicted Disease: ${data.name}. Remedy: ${data.remedy}`
+            : `అంచనా వ్యాధి: ${data.name}. చికిత్స: ${data.remedy}`;
+        resultDiv.textContent = message;
+        const utterance = new SpeechSynthesisUtterance(message);
+        utterance.lang = currentLang === "en" ? "en-US" : "te-IN";
+        speechSynthesis.speak(utterance);
+      } catch (error) {
+        resultDiv.textContent = currentLang === "en" ? "Error in detection." : "గుర్తింపులో సమస్య ఉంది.";
+      }
+    }
+
+    applyLocale(currentLang);
+    showSection("home");
+  </script>
+</body>
+</html>

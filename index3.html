@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Leaf Disease Detector and Smart Farming</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background-image: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1350&q=80');
+           background-size: cover; background-repeat: no-repeat; background-attachment: fixed; }
+    .bg-overlay { background: rgba(255,255,255,0.83); backdrop-filter: blur(2.5px);}
+    .hidden { display: none; }
+  </style>
+</head>
+<body class="text-gray-800">
+
+  <!-- Navbar -->
+  <header class="bg-green-700 bg-opacity-90 text-white p-4 flex justify-between items-center">
+    <h1 class="text-xl font-bold" id="navbar-title">Leaf Disease Detector & Smart Farming</h1>
+    <select id="langSwitch" class="text-black p-1 rounded">
+      <option value="en">English</option>
+      <option value="te">తెలుగు</option>
+    </select>
+  </header>
+
+  <!-- Navigation -->
+  <nav class="bg-overlay flex justify-center mt-2 p-3 space-x-4 rounded-full">
+    <button onClick="showPage('home')" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-500 font-semibold transition" id="nav-home">Home</button>
+    <button onClick="showPage('organic')" class="px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-500 font-semibold transition" id="nav-organic">Organic</button>
+    <button onClick="showPage('detect')" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-500 font-semibold transition" id="nav-detect">Detection</button>
+  </nav>
+
+  <!-- Pages -->
+  <main class="max-w-3xl mx-auto mt-6 space-y-8">
+
+    <!-- Home Page -->
+    <section id="page-home" class="bg-overlay p-8 rounded-lg shadow-md">
+      <h2 class="text-3xl font-bold mb-4" id="title"></h2>
+      <p class="text-lg mb-4" id="subtitle"></p>
+      <h3 class="text-2xl font-bold mb-2" id="aboutTitle"></h3>
+      <p class="mb-3" id="aboutMission"></p>
+      <ul id="aboutFeatures" class="list-disc pl-8 space-y-1"></ul>
+    </section>
+
+    <!-- Organic Farming -->
+    <section id="page-organic" class="bg-overlay p-8 rounded-lg shadow-md hidden">
+      <h2 class="text-2xl font-bold mb-4" id="orgHeading"></h2>
+      <ul id="orgList" class="space-y-2 text-lg"></ul>
+    </section>
+
+    <!-- Disease Detection -->
+    <section id="page-detect" class="bg-overlay p-8 rounded-lg shadow-md hidden">
+      <h2 class="text-2xl font-bold mb-4" id="detectTitle"></h2>
+      <label id="uploadLabel" for="leafInput" class="font-semibold"></label>
+      <input type="file" id="leafInput" accept="image/*" class="mb-4 block w-full border rounded p-2">
+      <button id="detectBtn" onclick="predictDisease()" class="bg-green-600 text-white px-4 py-2 rounded">Detect Disease</button>
+      <div id="result" class="mt-4 text-lg font-medium text-gray-700"></div>
+    </section>
+
+  </main>
+  <footer class="bg-green-700 bg-opacity-90 text-white text-center py-4 mt-10">
+    <p id="footerText"></p>
+  </footer>
+
+  <!-- Language and Organic Data -->
+  <script>
+  const LOCALE = {
+    en: {
+      navbar: "Leaf Disease Detector & Smart Farming",
+      nav: {home: "Home", organic: "Organic", detect: "Detection"},
+      title: "Leaf Disease Detector & Smart Farming",
+      subtitle: "Empowering farmers and students with disease detection, remedies, and organic farming guidance.",
+      aboutTitle: "Mission",
+      aboutMission: "A smart, bilingual platform to help farmers, students, and researchers.",
+      aboutFeatures: [
+        "Accurate leaf disease detection",
+        "Remedies & medicines for each disease",
+        "Organic crop guidance",
+        "Results as text & voice (English & Telugu)"
+      ],
+      orgHeading: "Organic Farming Methods",
+      orgList: [
+        "Rice: Use green manure, compost, and neem cake.",
+        "Wheat: Crop rotation, farmyard manure, Azotobacter.",
+        "Tomato: Mulching, biopesticides (Trichoderma), cow dung compost.",
+        "Cotton: Neem oil sprays, intercropping with legumes.",
+        "Pulses: Vermicompost, rhizobium inoculation."
+      ],
+      detectTitle: "Detect Leaf Disease",
+      uploadLabel: "Upload Leaf Image",
+      detectBtn: "Detect Disease",
+      footer: "© 2025 Leaf Disease Detector & Smart Farming",
+      pleaseUpload: "Please upload a leaf image first."
+    },
+    te: {
+      navbar: "ఆకు వ్యాధి గుర్తింపు & స్మార్ట్ వ్యవసాయం",
+      nav: {home: "ఇంటి పేజీ", organic: "ఆర్గానిక్", detect: "వైద్యం"},
+      title: "ఆకు వ్యాధి గుర్తింపు & స్మార్ట్ వ్యవసాయం",
+      subtitle: "రైతులు, విద్యార్థులు, పరిశోధకులకు ఆకుకు వ్యాధి, చికిత్సలు మరియు ఆర్గానిక్ ఫార్మింగ్ మార్గదర్శనం.",
+      aboutTitle: "మిషన్",
+      aboutMission: "రైతులు, విద్యార్థులు, పరిశోధకులకు ఉపయుక్తమైన ద్విభాషా వెబ్ ప్లాట్‌ఫారమ్.",
+      aboutFeatures: [
+        "ఖచ్చితమైన ఆకుకు వ్యాధి గుర్తింపు",
+        "ప్రతి వ్యాధికి చికిత్సలు & మందులు",
+        "ఆర్గానిక్ పంట మార్గదర్శనం",
+        "ఫలితాలు వాయిస్ & టెక్స్ట్ (English & తెలుగు)"
+      ],
+      orgHeading: "ఆర్గానిక్ వ్యవసాయ పద్ధతులు",
+      orgList: [
+        "బియ్యం: గ్రీన్ కనుక, కంపోస్ట్, నిమ్మకాయ వాడాలి.",
+        "గోధుమ: పంట మార్పిడి, జీవ వ్యవసాయం, అజోటోబాక్టర్.",
+        "టమోటా: మల్చింగ్, బయోపెస్టిసైడ్లు (ట్రైకోడెర్మా), ఎండు మేయారు.",
+        "పత్తి: నిమ్మకాయ ఆయిల్, ఇతర పంటలతో ఇంటర్‌క్రాపింగ్.",
+        "పప్పులు: వర్మీ కంపోస్ట్, రైజోబియం ఉపయోగించాలి."
+      ],
+      detectTitle: "ఆకు వ్యాధి గుర్తింపు",
+      uploadLabel: "ఆకును అప్‌లోడ్ చేయండి",
+      detectBtn: "వ్యాధిని గుర్తించండి",
+      footer: "© 2025 ఆకు వ్యాధి గుర్తింపు & స్మార్ట్ వ్యవసాయం",
+      pleaseUpload: "దయచేసి ముందుగా ఆకును అప్‌లోడ్ చేయండి."
+    }
+  };
+
+  let currentLang = localStorage.getItem('lang') || 'en';
+  function applyLocale(lang) {
+    localStorage.setItem('lang', lang);
+    const T = LOCALE[lang];
+    document.getElementById("navbar-title").textContent = T.navbar;
+    document.getElementById("nav-home").textContent = T.nav.home;
+    document.getElementById("nav-organic").textContent = T.nav.organic;
+    document.getElementById("nav-detect").textContent = T.nav.detect;
+    document.getElementById("title").textContent = T.title;
+    document.getElementById("subtitle").textContent = T.subtitle;
+    document.getElementById("aboutTitle").textContent = T.aboutTitle;
+    document.getElementById("aboutMission").textContent = T.aboutMission;
+    document.getElementById("aboutFeatures").innerHTML = "";
+    T.aboutFeatures.forEach(f => {
+      const li = document.createElement("li"); li.textContent = f;
+      document.getElementById("aboutFeatures").appendChild(li);
+    });
+    document.getElementById("orgHeading").textContent = T.orgHeading;
+    document.getElementById("orgList").innerHTML = "";
+    T.orgList.forEach(f => {
+      const li = document.createElement("li"); li.textContent = f;
+      document.getElementById("orgList").appendChild(li);
+    });
+    document.getElementById("detectTitle").textContent = T.detectTitle;
+    document.getElementById("uploadLabel").textContent = T.uploadLabel;
+    document.getElementById("detectBtn").textContent = T.detectBtn;
+    document.getElementById("footerText").textContent = T.footer;
+  }
+  document.getElementById("langSwitch").value = currentLang;
+  document.getElementById("langSwitch").addEventListener("change", e => {
+    currentLang = e.target.value;
+    applyLocale(currentLang);
+  });
+
+  function showPage(page) {
+    document.getElementById("page-home").classList.add('hidden');
+    document.getElementById("page-organic").classList.add('hidden');
+    document.getElementById("page-detect").classList.add('hidden');
+    document.getElementById("page-" + page).classList.remove('hidden');
+  }
+
+  applyLocale(currentLang);
+  showPage('home');
+  </script>
+
+  <!-- Detection Logic -->
+  <script>
+  async function predictDisease() {
+    const fileInput = document.getElementById("leafInput");
+    const resultDiv = document.getElementById("result");
+    if (!fileInput.files.length) {
+      resultDiv.textContent = LOCALE[currentLang].pleaseUpload;
+      return;
+    }
+    const formData = new FormData();
+    formData.append('file', fileInput.files[0]);
+    formData.append('lang', currentLang);
+    resultDiv.textContent = currentLang === 'en' ? "Detecting..." : "గుర్తిస్తున్నాము...";
+    try {
+      const resp = await fetch('http://localhost:5000/predict', {
+        method: 'POST', body: formData
+      });
+      const data = await resp.json();
+      const message = (currentLang === "en")
+        ? `Predicted Disease: ${data.name}. Remedy: ${data.remedy}`
+        : `అంచనా వ్యాధి: ${data.name}. చికిత్స: ${data.remedy}`;
+      resultDiv.textContent = message;
+      const utterance = new SpeechSynthesisUtterance(message);
+      utterance.lang = currentLang === "en" ? "en-US" : "te-IN";
+      speechSynthesis.speak(utterance);
+    } catch (err) {
+      resultDiv.textContent = currentLang === 'en' ? "Error in detection." : "గుర్తింపులో సమస్య ఉంది.";
+    }
+  }
+  </script>
+</body>
+</html>
