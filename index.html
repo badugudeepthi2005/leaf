@@ -225,7 +225,7 @@
       formData.append("lang", currentLang);
       resultDiv.textContent = currentLang === "en" ? "Detecting..." : "గుర్తిస్తున్నాము...";
       try {
-        const resp = await fetch("http://localhost:5000/predict", {
+        const resp = await fetch("https://squirarchical-ablest-tuan.ngrok-free.dev/predict)", {
           method: "POST",
           body: formData,
         });
