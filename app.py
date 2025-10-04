@@ -50,10 +50,18 @@ REMEDIES = {
         "en": "Control whiteflies with insecticides like Pyron. Remove infected plants immediately.",
         "te": "వైట్‌డిల్స్ ని పైరాన్ వంటి కీటనాశకాలతో నియంత్రించండి. అంటుకున్న మొక్కలను వెంటనే తొలగించండి."
     },
+    "Target Spot": {
+        "en": "Use protectant fungicides like Azoxystrobin, Mancozeb, or Chlorothalonil. Remove infected plant debris, practice crop rotation, and ensure proper air circulation to reduce humidity.",
+        "te": "అశోక్సిస్ట్రోబిన్, మాంకోజెబ్ లేదా క్లోరోథాలోనిల్ వంటి రక్షణ ఫంగిసైడ్‌లను వాడండి. అంటుకున్న మొక్క పదార్థాలను తీసివేయండి, పంట మలుప λάారని పాటించండి మరియు తగిన గాలి పరిభ్రమణకు అవకాశం ఇస్తూ ఆర్గానిక వాతావరణాన్ని మెరుగుపరచండి."
+    },
     "Anthracnose": {
         "en": "Use disease-free seed and rotate crops. Apply copper fungicides preventively.",
         "te": "వ్యాధి రహిత విత్తనాలు వాడండి మరియు పంటల మార్పిడి చేయండి. కోపర్ ఫంగిసైడ్లను ముందుగానే వాడండి."
     },
+    "Tomato YellowLeaf Curl Virus": {
+        "en": "Control whiteflies using insecticides like Imidacloprid or Thiamethoxam. Remove infected plants immediately. Use yellow sticky traps and grow barrier crops like sorghum or maize.",
+        "te": "ఇమిడాక్లోప్రిడ్ లేదా థియామెథాక్సామ్ వంటి కీటనాశకాలతో వైట్‌లైఫ్లను నియంత్రించండి. అంటుకున్న మొక్కలను వెంటనే తీసివేయండి. పసుపు స్టికీ ట్రాప్స్ వాడండి మరియు సొరుగం, మక్కజొన్న వంటి అడ్డంకి పంటలను పెంచండి."
+}
     # Add more classes with similar treatment strategies as needed
 }
 
@@ -67,6 +75,9 @@ CLASS_KEY_MAPPING = {
     'Potato___Late_blight': 'Late blight',
     'Tomato_Leaf_Mold': 'Leaf Mold',
     'Tomato_Septoria_leaf_spot': 'Septoria leaf spot',
+    'target_spot': 'Target Spot',
+    'Tomato_Target_Spot': 'Target Spot',
+    'Tomato_Yellow_Leaf_Curl_Virus': 'Tomato YellowLeaf Curl Virus',
     'PlantVillage': 'Spider mites Two spotted spider mite',
     # Add more if necessary based on your dataset
 }
