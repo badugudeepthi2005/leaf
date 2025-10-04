@@ -216,15 +216,21 @@
     }
 
     async function predictDisease() {
-      const fileInput = document.getElementById("leafInput");
+      const fileInput = document.getElementById("fileInput");
+      const cameraInput = document.getElementById("cameraInput");
       const resultDiv = document.getElementById("result");
-      if (!fileInput.files.length) {
-        resultDiv.textContent = LOCALE[currentLang].pleaseUpload;
-        return;
-      }
-      const formData = new FormData();
-      formData.append("file", fileInput.files[0]);
-      formData.append("lang", currentLang);
+
+// Choose the file from whichever input has a file
+      const selectedFile = cameraInput.files[0] || fileInput.files[0];
+
+if (!selectedFile) {
+  resultDiv.textContent = LOCALE[currentLang].pleaseUpload;
+  return;
+}
+const formData = new FormData();
+formData.append("file", selectedFile);
+formData.append("lang", currentLang);
+
       resultDiv.textContent = currentLang === "en" ? "Detecting..." : "గుర్తిస్తున్నాము...";
       try {
         const resp = await fetch("https://squirarchical-ablest-tuan.ngrok-free.dev/predict", {
